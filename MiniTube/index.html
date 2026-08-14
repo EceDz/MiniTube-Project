@@ -1,0 +1,139 @@
+<!--20220702045 Ece Duzgec
+Welcome page with Initialize Database button and the entry point to MiniTube-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ <title>MiniTube</title>
+ <style>
+ * { box-sizing: border-box; margin: 0; padding: 0; }
+
+ body {
+ font-family: 'Segoe UI', sans-serif;
+ /* Displays space.avif at full brightness without any dark overlay filters */
+ background: url('space.avif') no-repeat center center fixed;
+ background-size: cover;
+ color: #fff;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: flex-start; 
+ min-height: 100vh;
+ padding: 20px;
+ padding-top: 14vh; 
+ }
+
+ .logo {
+ display: flex;
+ align-items: center;
+ gap: 20px;
+ margin-bottom: 24px;
+ }
+
+ /* Scaled up logo icon size */
+ .logo svg { width: 90px; height: 90px; }
+
+ /* Extra large heading styles */
+ .logo h1 {
+ font-size: 5rem; 
+ font-weight: 800;
+ letter-spacing: -2px;
+ text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+ }
+
+ .logo span { 
+ color: #ff008caf; 
+ text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+ }
+
+ /* Extra large tagline styles */
+ p.tagline {
+ color: #fff;
+ margin-bottom: 50px;
+ font-size: 1.8rem; 
+ font-weight: 600;
+ text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+ }
+
+ /* Prominent bold button layout */
+ #init-btn {
+ background: #ff008caf;
+ color: #fff;
+ border: none;
+ padding: 22px 72px; 
+ font-size: 1.5rem; 
+ font-weight: 700;
+ border-radius: 6px;
+ cursor: pointer;
+ box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+ transition: background 0.2s, transform 0.1s;
+ }
+
+ #init-btn:hover { background: #ff2a9baf; }
+ #init-btn:active { transform: scale(0.97); }
+ #init-btn:disabled { background: #555; cursor: not-allowed; }
+
+ /* Bold state message formatting */
+ #status {
+ margin-top: 36px;
+ font-size: 1.4rem; 
+ color: #fff;
+ min-height: 36px;
+ text-align: center;
+ font-weight: 700;
+ text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+ }
+
+ #status.error { color: #ff0000; }
+ #status.success { color: #00ff00; }
+ </style>
+</head>
+<body>
+
+ <div class="logo">
+ <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+ <rect width="90" height="90" rx="20" fill="#ff008caf"/>
+ <polygon points="35,25 65,45 35,65" fill="#fff"/>
+ </svg>
+ <h1>Mini<span>Tube</span></h1>
+ </div>
+
+ <p class="tagline">No need to overcomplicate, just what you need :)</p>
+
+ <button id="init-btn" onclick="initDB()">Initialize Database</button>
+
+ <div id="status"></div>
+
+ <script>
+ async function initDB() {
+ const btn = document.getElementById('init-btn');
+ const status = document.getElementById('status');
+
+ btn.disabled = true;
+ btn.textContent = 'Initializing…';
+ status.className = '';
+ status.textContent = 'Setting up the database, please wait…';
+
+ try {
+ const res = await fetch('install.php');
+ const text = await res.text();
+
+ if (res.ok && text.includes('SUCCESS')) {
+ status.className = 'success';
+ status.textContent = 'Database initialized! Redirecting to login…';
+ setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+ } else {
+ throw new Error(text || 'Unknown error from install.php');
+ }
+ } catch (err) {
+ status.className = 'error';
+ status.textContent = 'Error: ' + err.message;
+ btn.disabled = false;
+ btn.textContent = 'Initialize Database';
+ }
+ }
+ </script>
+</body>
+</html>

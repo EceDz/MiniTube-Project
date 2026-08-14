@@ -1,0 +1,122 @@
+<!--20220702045 Ece Duzgec
+SQL Console entry page with a textarea to type queries.-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8"/>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ <title>SQL Console</title>
+ <style>
+ * { box-sizing: border-box; margin: 0; padding: 0; }
+ body {
+ font-family: 'Segoe UI', sans-serif;
+ background: url('sqlspace.jpg') no-repeat center center fixed;
+ background-size: cover;
+ color: #fff;
+ min-height: 100vh;
+ }
+ nav {
+ background: rgba(0,0,0,0.75);
+ backdrop-filter: blur(10px);
+ border-bottom: 1px solid rgba(255,255,255,0.1);
+ padding: 14px 32px;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ position: sticky; top: 0; z-index: 100;
+ }
+ .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+ .nav-logo svg { width: 36px; height: 36px; }
+ .nav-logo span { font-size: 1.5rem; font-weight: 800; }
+ .nav-logo em { color: #ff008caf; font-style: normal; }
+ .nav-links { display: flex; gap: 20px; }
+ .nav-links a { color: #ccc; text-decoration: none; font-size: 0.95rem; }
+ .nav-links a:hover { color: #ff008caf; }
+ .container { max-width: 900px; margin: 28px auto; padding: 0 20px; }
+ .card {
+ background: rgba(0,0,0,0.6);
+ border: 1px solid rgba(255,255,255,0.12);
+ border-radius: 12px;
+ padding: 28px;
+ backdrop-filter: blur(8px);
+ margin-bottom: 24px;
+ }
+ .card h2 {
+ font-size: 1rem;
+ font-weight: 700;
+ color: #ff008caf;
+ margin-bottom: 18px;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ }
+ textarea {
+ width: 100%;
+ padding: 14px;
+ background: rgba(255,255,255,0.07);
+ border: 1px solid rgba(255,255,255,0.15);
+ border-radius: 8px;
+ color: #fff;
+ font-size: 0.95rem;
+ font-family: 'Courier New', monospace;
+ resize: vertical;
+ min-height: 120px;
+ outline: none;
+ transition: border 0.2s;
+ }
+ textarea:focus { border-color: #ff008caf; }
+ button[type=submit] {
+ margin-top: 12px;
+ padding: 11px 32px;
+ background: #ff008caf;
+ color: #fff;
+ border: none;
+ border-radius: 6px;
+ font-size: 1rem;
+ font-weight: 700;
+ cursor: pointer;
+ transition: background 0.2s;
+ }
+ button[type=submit]:hover { background: #ff2a9baf; }
+ </style>
+</head>
+<body>
+
+<nav>
+ <a class="nav-logo" href="#">
+ <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+ <rect width="90" height="90" rx="20" fill="#ff008caf"/>
+ <polygon points="35,25 65,45 35,65" fill="#fff"/>
+ </svg>
+ <span>Mini<em>Tube</em></span>
+ </a>
+ <div class="nav-links">
+ <a id="home-link" href="feed.php">Home</a>
+ <a href="login.html">Logout</a>
+ </div>
+</nav>
+
+<div class="container">
+ <div class="card">
+ <h2>SQL Console</h2>
+ <form action="sql.php" method="POST">
+ <textarea name="query" placeholder="SELECT * FROM USERS LIMIT 10;"></textarea>
+ <button type="submit">Run Query</button>
+ </form>
+ </div>
+</div>
+
+<script>
+const uid = new URLSearchParams(window.location.search).get('user_id') || '';
+if (uid) {
+    document.getElementById('home-link').href = 'feed.php?user_id=' + uid;
+    const form = document.querySelector('form');
+    if (form) {
+        const inp = document.createElement('input');
+        inp.type = 'hidden'; inp.name = 'user_id'; inp.value = uid;
+        form.appendChild(inp);
+    }
+}
+</script>
+</body>
+</html>
