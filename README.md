@@ -1,6 +1,6 @@
 # MiniTube
 
-A YouTube-style video platform built with PHP and MySQL as a database/web programming course project. It includes user accounts, channels, video watching with likes and threaded comments, subscriptions, search, a personalized subscription feed, and a live SQL query console for exploring the database directly from the browser.
+A YouTube-style video platform built with PHP and MySQL. It includes user accounts, channels, video watching with likes and threaded comments, subscriptions, search, a personalized subscription feed, and a live SQL query console for exploring the database directly from the browser.
 
 ## Features
 
@@ -11,6 +11,11 @@ A YouTube-style video platform built with PHP and MySQL as a database/web progra
 - **Search** — search across videos and channels with All / Videos / Channels filters (`search.html` + `search.php`)
 - **SQL console** — a built-in query tool (`sql.html` + `sql.php`) that runs `SELECT` / `INSERT` / `UPDATE` / `DELETE` statements typed by the user against the live database and renders the results, with friendly error messages for common MySQL errors
 - **Synthetic data generator** — `generate_data.php` builds a large, realistic seed dataset from the included `.txt` word lists (names, bios, video titles, categories, etc.)
+
+## Documentation
+
+- [`ER Diagram.pdf`](ER%20Diagram.pdf) — entity-relationship diagram for the six-table schema (users, channels, videos, subscriptions, comments, likes) and how they relate.
+- [`ActionFlow.pdf`](ActionFlow.pdf) — flowchart of the full application flow, from initializing the database through login, navigation, watching/searching/commenting, and the SQL console.
 
 ## Database Schema
 
@@ -63,19 +68,24 @@ Generated user passwords follow a predictable pattern (uppercase letters of the 
 ## Project Structure
 
 ```
-MiniTube/
-├── index.html          # Landing/entry page
-├── login.html / .php   # Sign in & sign up
-├── feed.html / .php    # Subscription feed / homepage
-├── watch.php            # Video watch page (likes, comments, subscribe)
-├── channel.html / .php # Channel pages
-├── search.html / .php  # Search
-├── sql.html / .php     # In-browser SQL query console
-├── install.php          # Creates & seeds the database
-├── generate_data.php    # Builds seed.sql from the .txt data files
-├── seed.sql              # Pre-generated seed data
-├── *.txt                # Source word lists used by generate_data.php
-└── *.jpg / *.avif        # Static background images used by the pages
+.
+├── ActionFlow.pdf       # Application flowchart (see Documentation)
+├── ER Diagram.pdf       # Database entity-relationship diagram (see Documentation)
+├── LICENSE
+├── README.md
+└── MiniTube/
+    ├── index.html          # Landing/entry page
+    ├── login.html / .php   # Sign in & sign up
+    ├── feed.html / .php    # Subscription feed / homepage
+    ├── watch.php            # Video watch page (likes, comments, subscribe)
+    ├── channel.html / .php # Channel pages
+    ├── search.html / .php  # Search
+    ├── sql.html / .php     # In-browser SQL query console
+    ├── install.php          # Creates & seeds the database
+    ├── generate_data.php    # Builds seed.sql from the .txt data files
+    ├── seed.sql              # Pre-generated seed data
+    ├── *.txt                # Source word lists used by generate_data.php
+    └── *.jpg / *.avif / *.png # Static background images used by the pages
 ```
 
 ## License
